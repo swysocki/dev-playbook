@@ -1,0 +1,18 @@
+---
+- name: add email to git config
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ email }}"
+
+- name: add username to git config
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_name }}"
+
+- name: Change default branch
+  community.general.git_config:
+    name: init.defaultBranch
+    scope: global
+    value: main

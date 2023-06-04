@@ -1,0 +1,9 @@
+---
+email: swysocki@gmail.com
+git_name: "Scott Wysocki"
+default_shell: "zsh"
+repos_path: "devel/repos"
+python_version: "3.8"
+neovim_version: "0.8.3"
+neovim_hash: "05f7a2cb177f4506882b7cd867d82207c79066e7a9550e4ef78e6eac537dd4a8"
+vim_version: "v9.0.1603"

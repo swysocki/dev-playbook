@@ -1,0 +1,28 @@
+---
+- name: Install neovim Macos
+  community.general.homebrew:
+    name: neovim
+  when: install_macos
+
+- name: Create local bin path
+  ansible.builtin.file:
+    path: "{{ home_path }}/.local/bin"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ group_name }}"
+  when: install_ubuntu
+
+- name: Install neovim from appimage
+  ansible.builtin.get_url:
+    url: "https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim.appimage"
+    dest: "/home/{{ ansible_user_id }}/.local/bin/nvim"
+    mode: "755"
+    checksum: "sha256:{{ neovim_hash }}"
+  when: install_ubuntu
+
+- name: Install vim-plug for neovim
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ home_path }}/.local/share/nvim/site/autoload/plug.vim"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ group_name }}"

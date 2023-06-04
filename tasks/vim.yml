@@ -1,0 +1,29 @@
+---
+- name: Create local bin path
+  ansible.builtin.file:
+    path: "{{ home_path }}/.local/bin"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ group_name }}"
+  when: install_ubuntu
+
+- name: Install vim from appimage
+  ansible.builtin.get_url:
+    url: "https://github.com/vim/vim-appimage/releases/download/{{ vim_version }}/Vim-{{vim_version}}.glibc2.29-x86_64.AppImage"
+    dest: "/home/{{ ansible_user_id }}/.local/bin/vim"
+    mode: "755"
+  when: install_ubuntu
+
+- name: Create vim plugin path
+  ansible.builtin.file:
+    path: "{{ home_path }}/.vim/autoload"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ group_name }}"
+
+- name: Install vim-plug
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ home_path }}/.vim/autoload/plug.vim"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ group_name }}"

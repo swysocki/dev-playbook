@@ -1,0 +1,49 @@
+---
+- name: Configure Host
+  hosts: all
+  connection: local
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - name: Set Ubuntu Install
+      ansible.builtin.set_fact:
+        install_ubuntu: true
+        install_macos: false
+        group_name: "{{ ansible_user_id }}"
+        home_path: "/home/{{ ansible_user_id }}"
+        pip_version: "pip3"
+        pipx_path: "/usr/bin/pipx"
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '22.04'
+      tags: ['always']
+
+    - name: Set Macos Install
+      ansible.builtin.set_fact:
+        install_macos: true
+        install_ubuntu: false
+        group_name: staff
+        home_path: "/Users/{{ ansible_user_id }}"
+        pip_version: "pip{{ python_version }}"
+        pipx_path: "{{ homebrew_path[ansible_architecture] }}/pipx"
+      when: ansible_os_family == "Darwin"
+      tags: ['always']
+
+  tasks:
+    - import_tasks: tasks/global.yml
+      tags: ['always']
+
+    - import_tasks: tasks/git.yml
+      tags: ['git']
+
+    - import_tasks: tasks/terminal.yml
+      tags: ['terminal']
+
+    - import_tasks: tasks/neovim.yml
+      tags: ['neovim']
+
+    - import_tasks: tasks/vim.yml
+      tags: ['vim']
+
+    - import_tasks: tasks/dotfiles.yml
+      tags: ['dotfiles']

@@ -1,0 +1,20 @@
+---
+- name: check for omz installation
+  ansible.builtin.stat:
+    path: "{{ home_path }}/.oh-my-zsh"
+  register: omz
+
+- name: install oh-my-zsh
+  #ansible.builtin.shell:
+  shell:
+    cmd: wget -qO - https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -
+  when: default_shell == "zsh" and not omz.stat.exists
+
+- name: install zsh plugins
+  ansible.builtin.git:
+    repo: "{{ item.project }}"
+    dest: "~/.oh-my-zsh/custom/plugins/{{ item.proj_name }}"
+  when: default_shell == "zsh"
+  with_items:
+    - {proj_name: "zsh-autosuggestions", project: "https://github.com/zsh-users/zsh-autosuggestions.git"}
+    - {proj_name: "forgit", project: "https://github.com/wfxr/forgit.git"}
