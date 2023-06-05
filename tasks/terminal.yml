@@ -18,3 +18,8 @@
   with_items:
     - {proj_name: "zsh-autosuggestions", project: "https://github.com/zsh-users/zsh-autosuggestions.git"}
     - {proj_name: "forgit", project: "https://github.com/wfxr/forgit.git"}
+
+- name: Set ZSH as the default shell
+  shell: chsh -s $(which zsh) {{ lookup('env', 'USER') }}
+  become: true
+  when: install_macos

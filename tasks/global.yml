@@ -20,3 +20,24 @@
     - zsh
   become: true
   when: install_ubuntu
+
+- name: install Brew packages
+  community.general.homebrew:
+    name: "{{ item }}"
+  loop:
+    - bash
+    - fzf
+    - git
+    - hadolint
+    - jq
+    - jsonnet
+    - pipx
+    - pyright
+    - python@{{ python_version }}
+    - ripgrep
+    - shellcheck
+    - shfmt
+    - virtualenv
+    - wget
+    - yamllint
+    - zsh

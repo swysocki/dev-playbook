@@ -1,4 +1,9 @@
 ---
+- name: Install Vim Homebrew
+  community.general.homebrew:
+    name: vim
+  when: install_macos
+
 - name: Create local bin path
   ansible.builtin.file:
     path: "{{ home_path }}/.local/bin"

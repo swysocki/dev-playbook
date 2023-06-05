@@ -26,6 +26,10 @@
         home_path: "/Users/{{ ansible_user_id }}"
         pip_version: "pip{{ python_version }}"
         pipx_path: "{{ homebrew_path[ansible_architecture] }}/pipx"
+      vars:
+        homebrew_path:
+          arm64: "/opt/homebrew/bin"
+          x86_64: "/usr/local/bin/"
       when: ansible_os_family == "Darwin"
       tags: ['always']
 
