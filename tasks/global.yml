@@ -41,3 +41,4 @@
     - wget
     - yamllint
     - zsh
+  when: install_macos

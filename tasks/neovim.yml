@@ -4,13 +4,16 @@
     name: neovim
   when: install_macos
 
-- name: Create local bin path
+- name: Create local paths
   ansible.builtin.file:
-    path: "{{ home_path }}/.local/bin"
+    path: "{{ item }}"
     state: directory
     owner: "{{ ansible_user_id }}"
     group: "{{ group_name }}"
   when: install_ubuntu
+  with_items:
+    - "{{ home_path }}/.local/bin"
+    - "{{ home_path }}/.local/share/nvim/site/autoload"
 
 - name: Install neovim from appimage
   ansible.builtin.get_url:
