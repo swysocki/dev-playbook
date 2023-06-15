@@ -17,6 +17,7 @@
     - shellcheck
     - tmux
     - virtualenv
+    - yamllint
     - zsh
   become: true
   when: install_ubuntu

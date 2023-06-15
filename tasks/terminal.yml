@@ -5,7 +5,7 @@
   register: omz
 
 - name: install oh-my-zsh
-  #ansible.builtin.shell:
+  # ansible.builtin.shell:
   shell:
     cmd: wget -qO - https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash -
   when: default_shell == "zsh" and not omz.stat.exists
@@ -22,4 +22,3 @@
 - name: Set ZSH as the default shell
   shell: chsh -s $(which zsh) {{ lookup('env', 'USER') }}
   become: true
-  when: install_macos
